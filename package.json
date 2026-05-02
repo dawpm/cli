@@ -1,12 +1,25 @@
 {
   "name": "@dawpm/cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "dawpm CLI — package manager for DAW plugins.",
   "license": "MIT",
-  "keywords": ["dawpm", "daw", "vst", "vst3", "fl-studio", "package-manager", "cli"],
+  "keywords": [
+    "dawpm",
+    "daw",
+    "vst",
+    "vst3",
+    "fl-studio",
+    "package-manager",
+    "cli"
+  ],
   "homepage": "https://github.com/dawpm/cli#readme",
-  "bugs": { "url": "https://github.com/dawpm/cli/issues" },
-  "repository": { "type": "git", "url": "git+https://github.com/dawpm/cli.git" },
+  "bugs": {
+    "url": "https://github.com/dawpm/cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dawpm/cli.git"
+  },
   "author": "Yann Cotineau",
   "type": "module",
   "bin": {
