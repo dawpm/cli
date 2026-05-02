@@ -1,0 +1,46 @@
+{
+  "name": "@dawpm/cli",
+  "version": "1.0.0",
+  "description": "dawpm CLI — package manager for DAW plugins.",
+  "license": "MIT",
+  "keywords": ["dawpm", "daw", "vst", "vst3", "fl-studio", "package-manager", "cli"],
+  "homepage": "https://github.com/dawpm/cli#readme",
+  "bugs": { "url": "https://github.com/dawpm/cli/issues" },
+  "repository": { "type": "git", "url": "git+https://github.com/dawpm/cli.git" },
+  "author": "Yann Cotineau",
+  "type": "module",
+  "bin": {
+    "dawpm": "./bin/dawpm.mjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -p tsconfig.json --watch",
+    "test": "vitest run",
+    "clean": "rm -rf dist",
+    "start": "node bin/dawpm.mjs"
+  },
+  "dependencies": {
+    "@dawpm/core": "^1.0.0",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.0",
+    "yaml": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
