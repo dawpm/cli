@@ -1,6 +1,7 @@
 import { RegistryClient } from '@dawpm/core';
 import { out, emitJson, colors } from '../util/output.js';
 import { resolveConfig, type CliGlobals } from '../util/config.js';
+import { parseSlug, displaySlug } from '../util/slug.js';
 
 export async function searchCommand(query: string, globals: CliGlobals): Promise<void> {
   const cfg = await resolveConfig(globals);
@@ -13,18 +14,19 @@ export async function searchCommand(query: string, globals: CliGlobals): Promise
     }
     for (const p of results) {
       const tags = p.tags.length ? colors.dim(`  [${p.tags.join(', ')}]`) : '';
-      process.stdout.write(`${colors.bold(p.slug)}  ${colors.dim(p.name)}${tags}\n`);
+      process.stdout.write(`${colors.bold(displaySlug(p.slug))}  ${colors.dim(p.name)}${tags}\n`);
       process.stdout.write(`  ${p.description}\n`);
     }
   });
 }
 
-export async function infoCommand(slug: string, globals: CliGlobals): Promise<void> {
+export async function infoCommand(rawSlug: string, globals: CliGlobals): Promise<void> {
   const cfg = await resolveConfig(globals);
+  const slug = parseSlug(rawSlug);
   const registry = new RegistryClient({ baseUrl: cfg.registry });
   const p = await registry.get(slug);
   emitJson(p, () => {
-    process.stdout.write(`${colors.bold(p.name)} ${colors.dim(`(${p.slug})`)}\n`);
+    process.stdout.write(`${colors.bold(p.name)} ${colors.dim(`(${displaySlug(p.slug)})`)}\n`);
     process.stdout.write(`${p.description}\n\n`);
     process.stdout.write(`${colors.dim('author:')}   ${p.author}\n`);
     process.stdout.write(`${colors.dim('license:')}  ${p.license}\n`);
@@ -32,6 +34,6 @@ export async function infoCommand(slug: string, globals: CliGlobals): Promise<vo
     process.stdout.write(`${colors.dim('size:')}     ${(p.download.size / 1024 / 1024).toFixed(1)} MiB\n`);
     process.stdout.write(`${colors.dim('formats:')}  ${p.install.map(i => i.format).join(', ')}\n`);
     if (p.tags.length) process.stdout.write(`${colors.dim('tags:')}     ${p.tags.join(', ')}\n`);
-    process.stdout.write(`\n${colors.dim('install:')} ${colors.cyan(`dawpm install ${p.slug}`)}\n`);
+    process.stdout.write(`\n${colors.dim('install:')} ${colors.cyan(`dawpm install ${displaySlug(p.slug)}`)}\n`);
   });
 }

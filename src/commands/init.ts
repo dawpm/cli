@@ -50,6 +50,6 @@ export async function initCommand(name: string, opts: InitOptions, globals: CliG
   emitJson({ dir, manifest }, () => {
     out.success(`initialized dawpm project at ${dir}`);
     out.info(`daw: ${opts.daw}`);
-    out.info(`next: cd ${name} && dawpm install <slug>`);
+    out.info(`next: cd ${name} && dawpm install @<ns>/<name>`);
   });
 }

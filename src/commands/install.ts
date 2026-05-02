@@ -5,19 +5,21 @@ import {
 } from '@dawpm/core';
 import { out, emitJson } from '../util/output.js';
 import { resolveConfig, dawConfig, type CliGlobals } from '../util/config.js';
+import { parseSlug, displaySlug } from '../util/slug.js';
 
 export interface InstallOptions {
   dryRun?: boolean;
 }
 
 export async function installCommand(
-  slug: string | undefined,
+  rawSlug: string | undefined,
   opts: InstallOptions,
   globals: CliGlobals,
 ): Promise<void> {
   const cwd = globals.cwd ?? process.cwd();
   const cfg = await resolveConfig(globals);
   const manifest = await readManifest(cwd);
+  const slug = rawSlug ? parseSlug(rawSlug) : undefined;
 
   let adapter;
   try {
@@ -44,7 +46,7 @@ export async function installCommand(
   const failed: { slug: string; error: string }[] = [];
 
   for (const target of targets) {
-    out.step(`resolving ${target}`);
+    out.step(`resolving ${displaySlug(target)}`);
     let plugin;
     try {
       plugin = await registry.get(target);
@@ -55,10 +57,10 @@ export async function installCommand(
       continue;
     }
     if (opts.dryRun) {
-      out.info(`would install ${plugin.slug} (${plugin.download.size} bytes)`);
+      out.info(`would install ${displaySlug(plugin.slug)} (${plugin.download.size} bytes)`);
       continue;
     }
-    out.step(`downloading ${plugin.slug}`);
+    out.step(`downloading ${displaySlug(plugin.slug)}`);
     try {
       const { entry, result } = await installPlugin({
         plugin, adapter, cacheDir: cfg.cache ?? defaultCacheDir(),

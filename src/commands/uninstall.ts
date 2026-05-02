@@ -3,9 +3,11 @@ import {
 } from '@dawpm/core';
 import { out, emitJson } from '../util/output.js';
 import { type CliGlobals } from '../util/config.js';
+import { parseSlug, displaySlug } from '../util/slug.js';
 
-export async function uninstallCommand(slug: string, globals: CliGlobals): Promise<void> {
+export async function uninstallCommand(rawSlug: string, globals: CliGlobals): Promise<void> {
   const cwd = globals.cwd ?? process.cwd();
+  const slug = parseSlug(rawSlug);
   const manifest = await readManifest(cwd);
   const lock = (await readLockfile(cwd)) ?? emptyLockfile(manifest);
 
@@ -27,7 +29,7 @@ export async function uninstallCommand(slug: string, globals: CliGlobals): Promi
   }
 
   if (!entry && !wasInDeps) {
-    out.warn(`${slug} is not installed`);
+    out.warn(`${displaySlug(slug)} is not installed`);
     emitJson({ slug, removed: false }, () => undefined);
     return;
   }

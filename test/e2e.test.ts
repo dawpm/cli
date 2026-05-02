@@ -110,7 +110,7 @@ describe.skipIf(!HAS_ZIP)('e2e: dawpm install dsk/overture', () => {
       `cache = ${cache}\n[daw.fl-studio]\nroot = ${fakeFl}\n`,
     );
 
-    const r = await run(['install', 'dsk/overture', '--cwd', proj], proj);
+    const r = await run(['install', '@dsk/overture', '--cwd', proj], proj);
     if (r.code !== 0) {
       console.error('STDOUT:', r.stdout);
       console.error('STDERR:', r.stderr);
@@ -132,12 +132,12 @@ describe.skipIf(!HAS_ZIP)('e2e: dawpm install dsk/overture', () => {
     expect(lock).toMatch(/lockfileVersion: 1/);
 
     // second run: cached
-    const r2 = await run(['install', 'dsk/overture', '--cwd', proj], proj);
+    const r2 = await run(['install', '@dsk/overture', '--cwd', proj], proj);
     expect(r2.code).toBe(0);
     expect(r2.stdout + r2.stderr).toMatch(/cached/);
 
     // uninstall removes the dll
-    const r3 = await run(['uninstall', 'dsk/overture', '--cwd', proj], proj);
+    const r3 = await run(['uninstall', '@dsk/overture', '--cwd', proj], proj);
     expect(r3.code).toBe(0);
     await expect(fs.stat(dll)).rejects.toThrow();
 

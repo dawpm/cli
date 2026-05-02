@@ -33,9 +33,9 @@ function emit(level: LogLevel, glyph: string, msg: string): void {
 export const out = {
   step:    (m: string) => emit('info',  c.cyan('›'),    m),
   success: (m: string) => emit('info',  c.green('✓'),  m),
-  added:   (slug: string) => emit('info', c.green('+'), c.bold(slug)),
-  removed: (slug: string) => emit('info', c.red('-'),   c.bold(slug)),
-  cached:  (slug: string) => emit('info', c.dim('•'),   `${slug} ${c.dim('(cached)')}`),
+  added:   (slug: string) => emit('info', c.green('+'), c.bold(slug.startsWith('@') ? slug : `@${slug}`)),
+  removed: (slug: string) => emit('info', c.red('-'),   c.bold(slug.startsWith('@') ? slug : `@${slug}`)),
+  cached:  (slug: string) => emit('info', c.dim('•'),   `${slug.startsWith('@') ? slug : `@${slug}`} ${c.dim('(cached)')}`),
   warn:    (m: string) => emit('warn',  c.yellow('⚠'), m),
   error:   (m: string) => emit('error', c.red('✗'),    m),
   info:    (m: string) => emit('info',  c.dim('·'),    m),

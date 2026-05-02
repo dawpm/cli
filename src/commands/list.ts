@@ -1,6 +1,7 @@
 import { readManifest, readLockfile, getDawAdapter, FlStudioConfigError } from '@dawpm/core';
 import { out, emitJson, colors } from '../util/output.js';
 import { resolveConfig, dawConfig, type CliGlobals } from '../util/config.js';
+import { displaySlug } from '../util/slug.js';
 
 export async function listCommand(globals: CliGlobals): Promise<void> {
   const cwd = globals.cwd ?? process.cwd();
@@ -15,7 +16,7 @@ export async function listCommand(globals: CliGlobals): Promise<void> {
     if (data.length === 0) { out.info('no dependencies'); return; }
     for (const d of data) {
       const status = d.installed ? colors.green('●') : colors.dim('○');
-      process.stdout.write(`${status} ${colors.bold(d.slug)}${d.sha256 ? colors.dim(`  ${d.sha256.slice(0, 8)}`) : ''}\n`);
+      process.stdout.write(`${status} ${colors.bold(displaySlug(d.slug))}${d.sha256 ? colors.dim(`  ${d.sha256.slice(0, 8)}`) : ''}\n`);
     }
   });
 }
