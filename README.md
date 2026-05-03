@@ -1,6 +1,6 @@
 # @dawpm/cli
 
-The `dawpm` command. Install free and open-source plugins for FL Studio from the terminal — like `npm`, but for VSTs.
+The `dawpm` command. Install free and open-source plugins for FL Studio from the terminal.
 
 ```sh
 npm install -g @dawpm/cli
@@ -22,7 +22,7 @@ Tell `dawpm` where FL Studio lives once, in `~/.dawpmrc`:
 exe = C:\Program Files\Image-Line\FL Studio 21\FL64.exe
 ```
 
-By default, the CLI talks to [dawpm-registry.yanncotineau.dev](https://dawpm-registry.yanncotineau.dev). Override it with `registry = https://...` in `.dawpmrc` or `--registry` on the command line.
+Point at a registry by setting `registry = https://...` in `.dawpmrc` or `--registry` on the command line.
 
 ## Commands
 
@@ -39,7 +39,7 @@ By default, the CLI talks to [dawpm-registry.yanncotineau.dev](https://dawpm-reg
 
 ## Configuration
 
-Config is resolved npm-style (later wins): defaults → `/etc/dawpmrc` → `~/.dawpmrc` → `./.dawpmrc` (walked up) → `DAWPM_*` env vars → CLI flags.
+Config is resolved npm-style (later wins): defaults, `/etc/dawpmrc`, `~/.dawpmrc`, `./.dawpmrc` (walked up), `DAWPM_*` env vars, then CLI flags.
 
 ## License
 
